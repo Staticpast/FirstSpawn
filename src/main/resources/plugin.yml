@@ -1,0 +1,16 @@
+name: FirstSpawn
+version: '1.0'
+main: io.mckenz.firstspawn.FirstSpawn
+api-version: '1.21'
+description: Ensures new players spawn at the correct coordinates
+commands:
+  firstspawn:
+    description: Main command for FirstSpawn plugin
+    usage: |
+      /<command> set - Sets the first spawn location to your position
+      /<command> status - Shows current spawn location
+      /<command> test - Test teleport to spawn location
+      /<command> toggle - Enable/disable the plugin
+      /<command> reload - Reload the configuration
+    permission: firstspawn.admin
+    aliases: [fs] 

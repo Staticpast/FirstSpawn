@@ -1,0 +1,9 @@
+# Default spawn location for new players
+# This will be updated when using /firstspawn set
+enabled: true
+
+firstSpawn:
+  world: world
+  x: -115
+  y: 65
+  z: -60 
