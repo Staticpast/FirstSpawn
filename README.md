@@ -2,6 +2,9 @@
 
 A Minecraft Spigot plugin that ensures new players spawn at a designated location when joining the server for the first time.
 
+[![SpigotMC](https://img.shields.io/badge/SpigotMC-FirstSpawn-orange)](https://www.spigotmc.org/resources/firstspawn.122818/)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/paypalme/mckenzio)
+
 ## Features
 
 - 📍 Automatically teleports new players to a designated spawn location
@@ -22,7 +25,7 @@ A Minecraft Spigot plugin that ensures new players spawn at a designated locatio
 
 ## Installation
 
-1. Download the latest release from [GitHub Releases](https://github.com/McKenzieJDan/FirstSpawn/releases)
+1. Download from [Spigot](https://www.spigotmc.org/resources/firstspawn.122818/) or [GitHub Releases](https://github.com/McKenzieJDan/FirstSpawn/releases)
 2. Place the .jar in your server's `plugins` folder
 3. Restart your server
 4. Use `/firstspawn set` to set the spawn location for new players
@@ -52,6 +55,9 @@ To build the plugin yourself:
 1. Clone the repository
 2. Run `mvn clean package`
 3. Find the built jar in the `target` folder
+
+## Support
+If you find this plugin helpful, consider [buying me a coffee](https://www.paypal.com/paypalme/mckenzio) ☕
 
 ## License
 
