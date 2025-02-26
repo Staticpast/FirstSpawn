@@ -15,6 +15,8 @@ public class FirstSpawn extends JavaPlugin implements Listener {
     private Location firstSpawnLocation;
     private FileConfiguration config;
     private boolean enabled;
+    private boolean debug;
+    private String welcomeMessage;
 
     @Override
     public void onEnable() {
@@ -24,21 +26,62 @@ public class FirstSpawn extends JavaPlugin implements Listener {
         
         // Register events
         getServer().getPluginManager().registerEvents(this, this);
-        getLogger().info("FirstSpawn has been enabled!");
+        logDebug("FirstSpawn has been enabled!");
     }
 
     private void loadConfig() {
         config = getConfig();
         enabled = config.getBoolean("enabled", true);
+        debug = config.getBoolean("debug", false);
+        welcomeMessage = config.getString("welcome-message", "");
 
         // Load spawn location from config
         if (config.contains("firstSpawn")) {
-            firstSpawnLocation = new Location(
-                getServer().getWorld(config.getString("firstSpawn.world")),
-                config.getDouble("firstSpawn.x"),
-                config.getDouble("firstSpawn.y"),
-                config.getDouble("firstSpawn.z")
-            );
+            try {
+                firstSpawnLocation = new Location(
+                    getServer().getWorld(config.getString("firstSpawn.world")),
+                    config.getDouble("firstSpawn.x"),
+                    config.getDouble("firstSpawn.y"),
+                    config.getDouble("firstSpawn.z")
+                );
+                
+                // Set direction if specified
+                String direction = config.getString("firstSpawn.direction", "");
+                if (!direction.isEmpty()) {
+                    try {
+                        switch (direction.toUpperCase()) {
+                            case "NORTH":
+                                firstSpawnLocation.setYaw(180f);
+                                break;
+                            case "EAST":
+                                firstSpawnLocation.setYaw(270f);
+                                break;
+                            case "SOUTH":
+                                firstSpawnLocation.setYaw(0f);
+                                break;
+                            case "WEST":
+                                firstSpawnLocation.setYaw(90f);
+                                break;
+                            default:
+                                logDebug("Invalid direction in config: " + direction);
+                                break;
+                        }
+                    } catch (Exception e) {
+                        logDebug("Error setting direction: " + e.getMessage());
+                    }
+                }
+                
+                logDebug("Loaded spawn location: " + formatLocationRaw(firstSpawnLocation));
+            } catch (Exception e) {
+                getLogger().warning("Error loading spawn location: " + e.getMessage());
+                firstSpawnLocation = null;
+            }
+        }
+    }
+
+    private void logDebug(String message) {
+        if (debug) {
+            getLogger().info("[DEBUG] " + message);
         }
     }
 
@@ -59,7 +102,13 @@ public class FirstSpawn extends JavaPlugin implements Listener {
             player.teleport(firstSpawnLocation);
             // Set their spawn point
             player.setBedSpawnLocation(firstSpawnLocation, true);
-            getLogger().info("Teleported new player " + player.getName() + " to first spawn location");
+            
+            // Send welcome message if configured
+            if (!welcomeMessage.isEmpty()) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', welcomeMessage));
+            }
+            
+            logDebug("Teleported new player " + player.getName() + " to first spawn location");
         }
     }
 
@@ -68,6 +117,12 @@ public class FirstSpawn extends JavaPlugin implements Listener {
         return String.format("%s%s: %s%.1f, %.1f, %.1f", 
             ChatColor.GREEN, loc.getWorld().getName(),
             ChatColor.YELLOW, loc.getX(), loc.getY(), loc.getZ());
+    }
+    
+    private String formatLocationRaw(Location loc) {
+        if (loc == null) return "Not set";
+        return String.format("%s: %.1f, %.1f, %.1f", 
+            loc.getWorld().getName(), loc.getX(), loc.getY(), loc.getZ());
     }
 
     @Override
@@ -83,6 +138,7 @@ public class FirstSpawn extends JavaPlugin implements Listener {
             sender.sendMessage(ChatColor.YELLOW + "/firstspawn test " + ChatColor.WHITE + "- Test teleport to spawn");
             sender.sendMessage(ChatColor.YELLOW + "/firstspawn toggle " + ChatColor.WHITE + "- Enable/disable plugin");
             sender.sendMessage(ChatColor.YELLOW + "/firstspawn reload " + ChatColor.WHITE + "- Reload configuration");
+            sender.sendMessage(ChatColor.YELLOW + "/firstspawn debug " + ChatColor.WHITE + "- Toggle debug mode");
             return true;
         }
 
@@ -102,18 +158,40 @@ public class FirstSpawn extends JavaPlugin implements Listener {
                 config.set("firstSpawn.x", location.getX());
                 config.set("firstSpawn.y", location.getY());
                 config.set("firstSpawn.z", location.getZ());
+                
+                // Save direction based on player's yaw
+                float yaw = location.getYaw();
+                String direction = "";
+                if (yaw >= 135 && yaw < 225) {
+                    direction = "NORTH";
+                } else if (yaw >= 225 && yaw < 315) {
+                    direction = "EAST";
+                } else if ((yaw >= 315 && yaw <= 360) || (yaw >= 0 && yaw < 45)) {
+                    direction = "SOUTH";
+                } else if (yaw >= 45 && yaw < 135) {
+                    direction = "WEST";
+                }
+                config.set("firstSpawn.direction", direction);
+                
                 saveConfig();
+                logDebug("Set spawn location to: " + formatLocationRaw(location) + " facing " + direction);
 
                 sender.sendMessage(ChatColor.GREEN + "First spawn location has been set to your current location!");
-                sender.sendMessage(ChatColor.YELLOW + "Location: " + formatLocation(location));
+                sender.sendMessage(ChatColor.YELLOW + "Location: " + formatLocation(location) + 
+                                  (direction.isEmpty() ? "" : ChatColor.YELLOW + " facing " + direction));
                 break;
 
             case "status":
                 sender.sendMessage(ChatColor.GOLD + "FirstSpawn Status:");
                 sender.sendMessage(ChatColor.YELLOW + "Plugin enabled: " + 
                     (enabled ? ChatColor.GREEN + "Yes" : ChatColor.RED + "No"));
+                sender.sendMessage(ChatColor.YELLOW + "Debug mode: " + 
+                    (debug ? ChatColor.GREEN + "Enabled" : ChatColor.RED + "Disabled"));
                 sender.sendMessage(ChatColor.YELLOW + "Current spawn location: " + 
                     formatLocation(firstSpawnLocation));
+                sender.sendMessage(ChatColor.YELLOW + "Welcome message: " + 
+                    (welcomeMessage.isEmpty() ? ChatColor.RED + "None" : 
+                     ChatColor.GREEN + welcomeMessage));
                 break;
 
             case "test":
@@ -128,6 +206,13 @@ public class FirstSpawn extends JavaPlugin implements Listener {
                 Player testPlayer = (Player) sender;
                 testPlayer.teleport(firstSpawnLocation);
                 sender.sendMessage(ChatColor.GREEN + "Teleported to first spawn location!");
+                
+                // Show welcome message in test mode too
+                if (!welcomeMessage.isEmpty()) {
+                    testPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', welcomeMessage));
+                    sender.sendMessage(ChatColor.YELLOW + "Sent welcome message: " + 
+                                      ChatColor.GREEN + welcomeMessage);
+                }
                 break;
 
             case "toggle":
@@ -136,6 +221,14 @@ public class FirstSpawn extends JavaPlugin implements Listener {
                 saveConfig();
                 sender.sendMessage(ChatColor.YELLOW + "FirstSpawn is now " + 
                     (enabled ? ChatColor.GREEN + "enabled" : ChatColor.RED + "disabled"));
+                break;
+                
+            case "debug":
+                debug = !debug;
+                config.set("debug", debug);
+                saveConfig();
+                sender.sendMessage(ChatColor.YELLOW + "Debug mode is now " + 
+                    (debug ? ChatColor.GREEN + "enabled" : ChatColor.RED + "disabled"));
                 break;
 
             case "reload":

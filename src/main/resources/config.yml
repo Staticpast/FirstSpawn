@@ -1,9 +1,54 @@
-# Default spawn location for new players
-# This will be updated when using /firstspawn set
+# ======================================
+# FirstSpawn Configuration
+# ======================================
+# Plugin Version: ${project.version}
+# 
+# This configuration file controls all aspects of the FirstSpawn plugin.
+# For support or questions, visit: https://github.com/McKenzieJDan/FirstSpawn
+
+# ======================================
+# General Settings
+# ======================================
+
+# Master switch to enable or disable the plugin
 enabled: true
 
+# ======================================
+# Spawn Location Settings
+# ======================================
+
+# First spawn location coordinates
+# This is where new players will be teleported when they join for the first time
 firstSpawn:
+  # The world name where new players will spawn
   world: world
+  
+  # X coordinate for the spawn position
   x: -115
+  
+  # Y coordinate for the spawn position (vertical)
   y: 65
-  z: -60 
+  
+  # Z coordinate for the spawn position
+  z: -60
+  
+  # Optional: Set the spawn facing direction
+  # Values: NORTH, EAST, SOUTH, WEST
+  # Leave blank to use default
+  direction: ""
+
+# ======================================
+# Messaging Settings
+# ======================================
+
+# Message sent to new players when they are teleported to first spawn
+# Leave blank to disable
+welcome-message: "Welcome to the server! You've been teleported to the spawn location."
+
+# ======================================
+# Advanced Settings
+# ======================================
+
+# Debug mode - when enabled, additional information will be printed to the console
+# Only enable this when troubleshooting issues
+debug: false 
