@@ -1,5 +1,5 @@
 name: FirstSpawn
-version: '1.0.0'
+version: '${project.version}'
 main: io.mckenz.firstspawn.FirstSpawn
 api-version: '1.21'
 description: Ensures new players spawn at the correct coordinates

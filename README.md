@@ -7,35 +7,40 @@ A Minecraft Spigot plugin that ensures new players spawn at a designated locatio
 
 ## Features
 
-- 📍 Automatically teleports new players to a designated spawn location
-- 🛏️ Sets the player's spawnpoint to the designated location
-- 🎮 Simple admin commands to manage spawn location
-- ⚙️ Configurable and persistent spawn location
-- 🔄 Reload configuration without server restart
-- 💡 Test teleport feature for administrators
-- 🎛️ Enable/disable plugin functionality on the fly
-
-## Commands
-
-- `/firstspawn set` - Set the first spawn location to your current position
-- `/firstspawn status` - Show current plugin settings and spawn location
-- `/firstspawn test` - Test teleport to the spawn location
-- `/firstspawn toggle` - Enable/disable the plugin
-- `/firstspawn reload` - Reload the configuration
+* 📍 Automatically teleports new players to a designated spawn location
+* 🛏️ Sets the player's spawnpoint to the designated location
+* 🎮 Simple admin commands to manage spawn location
+* ⚙️ Configurable and persistent spawn location
+* 🔄 Reload configuration without server restart
+* 💡 Test teleport feature for administrators
+* 🎛️ Enable/disable plugin functionality on the fly
 
 ## Installation
 
-1. Download from [Spigot](https://www.spigotmc.org/resources/firstspawn.122818/) or [GitHub Releases](https://github.com/McKenzieJDan/FirstSpawn/releases)
-2. Place the .jar in your server's `plugins` folder
+1. Download the latest release from [Spigot](https://www.spigotmc.org/resources/firstspawn.122818/) or [GitHub Releases](https://github.com/McKenzieJDan/FirstSpawn/releases)
+2. Place the JAR file in your server's `plugins` folder
 3. Restart your server
-4. Use `/firstspawn set` to set the spawn location for new players
+4. Configure the plugin in the `config.yml` file
 
-## Requirements
+## Usage
 
-- Spigot/Paper 1.21.4
-- Java 17+
+The plugin automatically detects when a player joins the server for the first time and teleports them to the designated spawn location. No player action is required.
+
+### Commands
+
+* `/firstspawn set` - Set the first spawn location to your current position
+* `/firstspawn status` - Show current plugin settings and spawn location
+* `/firstspawn test` - Test teleport to the spawn location
+* `/firstspawn toggle` - Enable/disable the plugin
+* `/firstspawn reload` - Reload the configuration
+
+### Permissions
+
+* `firstspawn.admin` - Access to all FirstSpawn commands (default: op)
 
 ## Configuration
+
+The plugin's configuration file (`config.yml`) is organized into logical sections:
 
 ```yaml
 # Enable or disable the plugin
@@ -49,14 +54,15 @@ firstSpawn:
   z: -60
 ```
 
-## Development
-To build the plugin yourself:
+For detailed configuration options, see the comments in the generated config.yml file.
 
-1. Clone the repository
-2. Run `mvn clean package`
-3. Find the built jar in the `target` folder
+## Requirements
+
+- Spigot/Paper 1.21.4
+- Java 21+
 
 ## Support
+
 If you find this plugin helpful, consider [buying me a coffee](https://www.paypal.com/paypalme/mckenzio) ☕
 
 ## License
