@@ -168,6 +168,11 @@ public class FirstSpawn extends JavaPlugin implements FirstSpawnAPI {
             return false;
         }
         
+        // Check if plugin functionality is enabled
+        if (!isPluginFunctionalityEnabled()) {
+            return false;
+        }
+        
         try {
             // Check if this is the player's first join
             boolean isFirstJoin = !player.hasPlayedBefore();
@@ -214,7 +219,7 @@ public class FirstSpawn extends JavaPlugin implements FirstSpawnAPI {
     
     @Override
     public boolean isPluginEnabled() {
-        return enabled;
+        return isPluginFunctionalityEnabled();
     }
     
     @Override
@@ -235,20 +240,20 @@ public class FirstSpawn extends JavaPlugin implements FirstSpawnAPI {
     }
     
     /**
-     * Checks if the plugin is enabled
+     * Checks if the plugin functionality is enabled
      * 
      * @return True if enabled, false otherwise
      */
-    public boolean isEnabled() {
+    public boolean isPluginFunctionalityEnabled() {
         return enabled;
     }
     
     /**
-     * Sets whether the plugin is enabled
+     * Sets whether the plugin functionality is enabled
      * 
      * @param enabled True to enable, false to disable
      */
-    public void setEnabled(boolean enabled) {
+    public void setPluginFunctionalityEnabled(boolean enabled) {
         this.enabled = enabled;
         config.set("enabled", enabled);
         saveConfig();

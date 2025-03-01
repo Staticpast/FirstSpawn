@@ -32,7 +32,10 @@ public class PlayerJoinListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (!plugin.isEnabled()) return;
+        // Skip if plugin is disabled
+        if (!plugin.isPluginFunctionalityEnabled()) {
+            return;
+        }
         
         Player player = event.getPlayer();
         Location firstSpawnLocation = plugin.getFirstSpawnLocation();

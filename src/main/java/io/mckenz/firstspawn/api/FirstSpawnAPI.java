@@ -44,7 +44,7 @@ public interface FirstSpawnAPI {
     boolean teleportToFirstSpawn(Player player, boolean setBedSpawn, boolean sendWelcomeMessage);
     
     /**
-     * Checks if the plugin is currently enabled
+     * Checks if the plugin functionality is enabled
      * 
      * @return True if enabled, false otherwise
      */

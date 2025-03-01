@@ -171,7 +171,7 @@ public class FirstSpawnCommand implements CommandExecutor, TabCompleter {
     private boolean handleStatusCommand(CommandSender sender) {
         sender.sendMessage(ChatColor.GOLD + "FirstSpawn Status:");
         sender.sendMessage(ChatColor.YELLOW + "Plugin enabled: " + 
-            (plugin.isEnabled() ? ChatColor.GREEN + "Yes" : ChatColor.RED + "No"));
+            (plugin.isPluginFunctionalityEnabled() ? ChatColor.GREEN + "Yes" : ChatColor.RED + "No"));
         sender.sendMessage(ChatColor.YELLOW + "Debug mode: " + 
             (plugin.isDebugEnabled() ? ChatColor.GREEN + "Enabled" : ChatColor.RED + "Disabled"));
         sender.sendMessage(ChatColor.YELLOW + "Set bed spawn: " + 
@@ -222,8 +222,8 @@ public class FirstSpawnCommand implements CommandExecutor, TabCompleter {
      * @return True if the command was handled successfully
      */
     private boolean handleToggleCommand(CommandSender sender) {
-        boolean newState = !plugin.isEnabled();
-        plugin.setEnabled(newState);
+        boolean newState = !plugin.isPluginFunctionalityEnabled();
+        plugin.setPluginFunctionalityEnabled(newState);
         
         sender.sendMessage(ChatColor.YELLOW + "FirstSpawn is now " + 
             (newState ? ChatColor.GREEN + "enabled" : ChatColor.RED + "disabled"));
