@@ -6,11 +6,12 @@
 
     <groupId>io.mckenz</groupId>
     <artifactId>FirstSpawn</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
 
     <name>FirstSpawn</name>
-    <description>A Minecraft Spigot plugin that ensures new players spawn at a designated location when joining the server for the first time</description>
+    <description>Ensures new players spawn at the correct coordinates</description>
+    <url>https://github.com/McKenzieJDan/FirstSpawn</url>
 
     <properties>
         <java.version>21</java.version>
