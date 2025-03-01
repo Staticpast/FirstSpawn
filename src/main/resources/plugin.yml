@@ -12,5 +12,38 @@ commands:
       /<command> test - Test teleport to spawn location
       /<command> toggle - Enable/disable the plugin
       /<command> reload - Reload the configuration
-    permission: firstspawn.admin
-    aliases: [fs] 
+      /<command> debug - Toggle debug mode
+    aliases: [fs]
+permissions:
+  firstspawn.admin:
+    description: Gives access to all FirstSpawn commands
+    default: op
+    children:
+      firstspawn.set: true
+      firstspawn.status: true
+      firstspawn.test: true
+      firstspawn.toggle: true
+      firstspawn.reload: true
+      firstspawn.debug: true
+      firstspawn.update: true
+  firstspawn.set:
+    description: Allows setting the first spawn location
+    default: op
+  firstspawn.status:
+    description: Allows checking the plugin status
+    default: op
+  firstspawn.test:
+    description: Allows testing the first spawn location
+    default: op
+  firstspawn.toggle:
+    description: Allows enabling/disabling the plugin
+    default: op
+  firstspawn.reload:
+    description: Allows reloading the plugin configuration
+    default: op
+  firstspawn.debug:
+    description: Allows toggling debug mode
+    default: op
+  firstspawn.update:
+    description: Allows receiving update notifications
+    default: op 

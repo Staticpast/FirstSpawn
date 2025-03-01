@@ -37,6 +37,10 @@ firstSpawn:
   # Leave blank to use default
   direction: ""
 
+  # Whether to set the player's bed spawn location to the first spawn location
+  # When enabled, players will respawn at the first spawn location if they die before setting a bed
+  set-bed-spawn: true
+
 # ======================================
 # Messaging Settings
 # ======================================
@@ -44,6 +48,22 @@ firstSpawn:
 # Message sent to new players when they are teleported to first spawn
 # Leave blank to disable
 welcome-message: "Welcome to the server! You've been teleported to the spawn location."
+
+# ======================================
+# Update Checker Settings
+# ======================================
+
+# Enable the update checker
+update-checker:
+  # Enable or disable the update checker
+  enabled: true
+  
+  # The SpigotMC resource ID for the plugin
+  # https://www.spigotmc.org/resources/firstspawn.122818/
+  resource-id: 122818
+  
+  # Notify admins when they join if an update is available
+  notify-admins: true
 
 # ======================================
 # Advanced Settings
