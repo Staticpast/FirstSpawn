@@ -78,7 +78,7 @@ public class UpdateChecker implements Listener {
                     
                     if (isNewer) {
                         updateAvailable = true;
-                        plugin.getLogger().info("A new update is available: v" + latestVersion);
+                        plugin.getLogger().info("A new update is available: " + latestVersion);
                         plugin.getLogger().info("You are currently running: v" + currentVersion);
                         plugin.getLogger().info("Download the latest version from: https://www.spigotmc.org/resources/" + resourceId);
                     } else {
