@@ -63,7 +63,7 @@ For detailed configuration options, see the comments in the generated config.yml
 
 ## Used By
 
-- [SuegoFaults](https://suegofaults.com) - A curated adult Minecraft community where this plugin ensures new players land in a welcoming, consistent starting location.
+[SuegoFaults](https://suegofaults.com) - A curated adult Minecraft community where this plugin ensures new players land in a welcoming, consistent starting location.
 
 ## Support
 
