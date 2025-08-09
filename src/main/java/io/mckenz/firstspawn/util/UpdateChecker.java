@@ -42,7 +42,7 @@ public class UpdateChecker implements Listener {
      * Checks for updates to the plugin
      */
     public void checkForUpdates() {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+        SchedulerUtil.runAsync(plugin, () -> {
             try {
                 String currentVersion = plugin.getDescription().getVersion();
                 latestVersion = fetchLatestVersion();
@@ -184,11 +184,11 @@ public class UpdateChecker implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (updateAvailable && notifyAdmins && event.getPlayer().hasPermission("firstspawn.update")) {
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            SchedulerUtil.runDelayed(plugin, () -> {
                 event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&6FirstSpawn&8] &7A new update is available: &6v" + latestVersion));
                 event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&6FirstSpawn&8] &7You are currently running: &6v" + plugin.getDescription().getVersion()));
                 event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&6FirstSpawn&8] &7Download at: &6spigotmc.org/resources/" + resourceId));
-            }, 40L); // 2 seconds delay
+            }, 40L, event.getPlayer()); // 2 seconds delay
         }
     }
 } 

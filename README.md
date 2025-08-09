@@ -58,8 +58,23 @@ For detailed configuration options, see the comments in the generated config.yml
 
 ## Requirements
 
-- Spigot/Paper 1.21.8
+- Spigot/Paper 1.21.8+ or Folia 1.21.8+
 - Java 21+
+
+## Folia Support
+
+FirstSpawn is fully compatible with **Folia**, the multithreaded Minecraft server software. The plugin automatically detects whether it's running on Folia and uses the appropriate scheduler APIs:
+
+- **Spigot/Paper**: Uses traditional Bukkit scheduler
+- **Folia**: Uses RegionScheduler, EntityScheduler, and AsyncScheduler for thread-safe operations
+
+### Features on Folia:
+- ✅ Thread-safe player teleportation
+- ✅ Cross-region compatibility
+- ✅ Async update checking
+- ✅ Entity-based scheduling for player notifications
+
+The plugin gracefully falls back to Bukkit scheduler methods if any Folia-specific operations fail, ensuring stability across all platforms.
 
 ## Used By
 
